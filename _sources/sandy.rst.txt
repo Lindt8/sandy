@@ -1,0 +1,30 @@
+sandy package
+=============
+
+.. automodule:: sandy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+   sandy.core
+   sandy.data
+   sandy.formats
+   sandy.integrals
+   sandy.replace
+
+Submodules
+----------
+
+.. toctree::
+
+   sandy.decay
+   sandy.functions
+   sandy.njoy
+   sandy.sampling
+   sandy.settings
+   sandy.tools
