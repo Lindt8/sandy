@@ -97,6 +97,12 @@ class DecayData():
 
     labels = ["PARENT", "DAUGHTER", "YIELD", "CONSTANT"]
     
+    def __init__(self, data):
+        self.data = data
+    
+    def get_awr(self):
+        return {k : v["awr"] for k,v in self.data.items()}
+
     def to_hdf5(self, filename, lib):
         """
         ....
@@ -322,7 +328,11 @@ def from_endf6(endf6):
     for ix,text in tape.TEXT.iteritems():
         X = endf6.read_section(*ix)
         zam = int(X["ZA"]*10 + X["LISO"])
-        groups[zam] = {"decay_constant" : X["LAMBDA"], "decay_mode" : {}}
+        groups[zam] = {
+                "awr" : X["AWR"],
+                "decay_constant" : X["LAMBDA"],
+                "decay_mode" : {}
+                }
         if "DK" not in X: # Stable isotope
             continue
         for rtyp, dk in X["DK"].items():
@@ -331,8 +341,7 @@ def from_endf6(endf6):
                     "branching_ratio" : dk["BR"],
                     }
             groups[zam]["decay_mode"][rtyp] = decay_mode_data
-    out = DecayData()
-    out.data = groups
+    out = DecayData(groups)
     return out
 
 
